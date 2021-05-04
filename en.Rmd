@@ -1,0 +1,106 @@
+---
+params: 
+  title: ""
+  publication_date: ""
+  doi: ""
+output: 
+  html_document:
+    anchor_sections: false
+    theme: null
+    highlight: null
+    mathjax: null
+    css: ["style.css", "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap"]
+    self_contained: true
+title: "`r params$title`"
+---
+
+```{r general-setup, include=FALSE}
+## This file contains the ENGLISH version of the data story
+
+# Set general chunk options
+knitr::opts_chunk$set(echo = FALSE, fig.showtext = TRUE, fig.retina = 3, 
+                      fig.align = "center", warning = FALSE, message = FALSE)
+
+# Install pacman package if needed
+if (!require("pacman")) {
+  install.packages("pacman")
+  library(pacman)
+}
+
+# Install snf.datastory package if not available, otherwise load it
+if (!require("snf.datastory")) {
+  if (!require("devtools")) {
+    install.packages("devtools")
+    library(devtools)
+  }
+  install_github("snsf-data/snf.datastory")
+  library(snf.datastory)
+}
+
+# Load packages
+p_load(tidyverse,
+       lubridate,
+       scales, 
+       conflicted, 
+       jsonlite,
+       here)
+
+# Conflict preferences
+conflict_prefer("filter", "dplyr")
+conflict_prefer("get_datastory_theme", "snf.datastory")
+conflict_prefer("get_datastory_scheme", "snf.datastory")
+
+# Increase showtext package font resolution
+showtext_opts(dpi = 320)
+
+# Set the locale for date formatting (Windows)
+Sys.setlocale("LC_TIME", "English")
+
+# Create function to print number with local language-specific format 
+print_num <- function(x) snf.datastory::print_num(x, lang = "en")
+
+# Knitr hook for local formatting of printed numbers
+knitr::knit_hooks$set(
+  inline <- function(x) {
+    if (!is.numeric(x)) {
+      x
+    } else {
+      print_num(x)
+    }
+  }
+)
+```
+
+```{r print-header-infos, results='asis'}
+# Add publication date to header
+cat(format(as_datetime(params$publication_date), "%d.%m.%Y"))
+
+# Register the Google font (same as Data Portal, is not loaded twice)
+cat(paste0("<link href='https://fonts.googleapis.com/css?family=", 
+           "Source+Sans+Pro:400,700&display=swap' rel='stylesheet'>"))
+```
+
+```{r story-specific-setup, include=FALSE}
+# Set story-specific variables etc. here
+
+# E.g. loading data...
+
+```
+
+
+<!-- Short lead (2-3 sentences) in bold -->
+
+On the <a href="https://data.snf.ch/" target="_blank">data.snf.ch</a> site, the SNSF shows what figures alone cannot: insights into research funding in the form of data-driven articles. The aim is to shine a light on the results of analyses with which the SNSF examines itself and the research and funding sector as a whole. These 'data stories' include visuals and illustrate for a wider audience what we can learn through data analyses.
+
+The data stories will start by focusing on:
+
+*	__<a href="https://data.snf.ch/stories/new-figures-oa-monitoring-2018-19-en.html" target="_blank">New data on open access</a>__: 55 per cent of publications in 2018 and 2019 resulting from SNSF-funded research are published in Open Access. And the trend is upwards.
+*	__<a href="https://data.snf.ch/stories/women-submitting-fewer-grant-proposals-en.html" target="_blank">Women researchers</a>__: the Covid 19 pandemic and its impact on the gender balance of research proposals.
+*	__<a href="https://data.snf.ch/stories/erc-grantees-snsf-grants-en.html" target="_blank">ERC grants</a>__: most European Research Council (ERC) grants to Switzerland go to researchers previously supported by the SNSF. 
+
+The SNSF's strategic priorities include playing an active role in developing Switzerland as a research location, and anticipating future needs. "Scientific analyses are the basis on which we advance our research funding," says Pierre Willa, member of the SNSF Executive Management. "In this way, the SNSF ensures that public research funding of around one billion francs annually will continue to be used wisely."
+
+Read our data stories <a href="https://data.snf.ch/stories" target="_blank">on the SNSF data portal</a>, incl. figures, graphs and comments that will enhance your reading experience.
+
+<br>
+<br>

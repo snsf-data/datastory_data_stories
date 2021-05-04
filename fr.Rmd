@@ -1,0 +1,107 @@
+---
+params: 
+  title: ""
+  publication_date: ""
+  doi: ""
+output: 
+  html_document:
+    anchor_sections: false
+    theme: null
+    highlight: null
+    mathjax: null
+    css: ["style.css", "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap"]
+    self_contained: true
+title: "`r params$title`"
+---
+
+```{r general-setup, include=FALSE}
+## This file contains the FRENCH version of the data story 
+
+# Set general chunk options
+knitr::opts_chunk$set(echo = FALSE, fig.showtext = TRUE, fig.retina = 3, 
+                      fig.align = "center", warning = FALSE, message = FALSE)
+
+# Install pacman package if needed
+if (!require("pacman")) {
+  install.packages("pacman")
+  library(pacman)
+}
+
+# Install snf.datastory package if not available, otherwise load it
+if (!require("snf.datastory")) {
+  if (!require("devtools")) {
+    install.packages("devtools")
+    library(devtools)
+  }
+  install_github("snsf-data/snf.datastory")
+  library(snf.datastory)
+}
+
+# Load packages
+p_load(tidyverse,
+       lubridate,
+       scales, 
+       conflicted, 
+       jsonlite,
+       here)
+
+# Conflict preferences
+conflict_prefer("filter", "dplyr")
+conflict_prefer("get_datastory_theme", "snf.datastory")
+conflict_prefer("get_datastory_scheme", "snf.datastory")
+
+# Increase showtext package font resolution
+showtext_opts(dpi = 320)
+
+# Set the locale for date formatting (Windows)
+Sys.setlocale("LC_TIME", "French")
+
+# Create function to print number with local language-specific format 
+print_num <- function(x) snf.datastory::print_num(x, lang = "fr")
+
+# Knitr hook for local formatting of printed numbers
+knitr::knit_hooks$set(
+  inline <- function(x) {
+    if (!is.numeric(x)) {
+      x
+    } else {
+      print_num(x)
+    }
+  }
+)
+```
+
+```{r print-header-infos, results='asis'}
+# Add publication date to header
+cat(format(as_datetime(params$publication_date), "%d.%m.%Y"))
+
+# Register the Google font (same as Data Portal, is not loaded twice)
+cat(paste0("<link href='https://fonts.googleapis.com/css?family=", 
+           "Source+Sans+Pro:400,700&display=swap' rel='stylesheet'>"))
+```
+
+```{r story-specific-setup, include=FALSE}
+# Set story-specific variables etc. here
+
+# E.g. loading data...
+
+```
+
+
+<!-- Short lead (2-3 sentences) in bold -->
+
+__Le FNS examine attentivement ses activités d’encouragement. Il publie désormais les résultats de ces analyses sur son portail de données. Libre accès, subventions du CER et chercheuses pendant la pandémie, tels sont les premiers thèmes abordés.__
+
+Pour adoucir l’aridité des données chiffrées, le FNS les met en récit sous forme d’articles sur son site <a href="https://data.snf.ch/" target="_blank">data.snf.ch</a> afin d’illustrer l’encouragement de la recherche. L’objectif vise à rendre intelligibles les résultats des études que le FNS utilise pour s’auto-évaluer et observer le paysage de la recherche et son financement. Un large public peut ainsi comprendre les analyses, aussi grâce à des visualisations.
+
+La série de récits de données débute avec les thèmes suivants :
+
+*	__<a href="https://data.snf.ch/stories/nouveaux-chiffres-oa-monitoring-2018-19-fr.html" target="_blank">Nouvelles données sur le libre accès</a>__ : 55 % des publications de 2018 et 2019 issues de la recherche financée par le FNS sont en libre accès. Et la tendance est à la hausse.
+*	__<a href="https://data.snf.ch/stories/moins-demandes-financement-femmes-fr.html" target="_blank">Chercheuses</a>__ : la pandémie de Covid-19 et son impact sur l’équilibre entre les sexes dans les propositions de recherche.
+*	__<a href="https://data.snf.ch/stories/boursiers-cer-grants-fns-fr.html" target="_blank">Financements du CER</a>__ : la plupart des subventions du Conseil européen de la recherche (CER) attribuées en Suisse le sont à des chercheuses et chercheurs que le FNS a soutenus auparavant.
+
+L’une des priorités stratégiques du FNS est de contribuer à façonner la place scientifique suisse et à anticiper ses besoins. "Les analyses scientifiques constituent la base sur laquelle nous développons notre encouragement de la recherche", déclare Pierre Willa, membre du Comité de direction du FNS. "Le FNS veille ainsi à ce que les fonds publics, environ un milliard de francs par an, continuent d’être utilisés à bon escient à l’avenir."
+
+Découvrez les récits de données que nous avons mitonnés pour vous <a href="https://data.snf.ch/stories" target="_blank">sur le portail de données du FNS</a> : chiffres, graphiques, explications.
+<br>
+<br>

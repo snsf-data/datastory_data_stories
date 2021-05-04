@@ -1,0 +1,105 @@
+---
+params: 
+  title: ""
+  publication_date: ""
+  doi: ""
+output: 
+  html_document:
+    anchor_sections: false
+    theme: null
+    highlight: null
+    mathjax: null
+    css: ["style.css", "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap"]
+    self_contained: true
+title: "`r params$title`"
+---
+
+
+```{r general-setup, include=FALSE}
+## This file contains the GERMAN version of the data story
+
+# Set general chunk options
+knitr::opts_chunk$set(echo = FALSE, fig.showtext = TRUE, fig.retina = 3, 
+                      fig.align = "center", warning = FALSE, message = FALSE)
+
+# Install pacman package if needed
+if (!require("pacman")) {
+  install.packages("pacman")
+  library(pacman)
+}
+
+# Install snf.datastory package if not available, otherwise load it
+if (!require("snf.datastory")) {
+  if (!require("devtools")) {
+    install.packages("devtools")
+    library(devtools)
+  }
+  install_github("snsf-data/snf.datastory")
+  library(snf.datastory)
+}
+
+# Load packages
+p_load(tidyverse,
+       lubridate,
+       scales, 
+       conflicted, 
+       jsonlite,
+       here, 
+       ggiraph)
+
+# Conflict preferences
+conflict_prefer("filter", "dplyr")
+conflict_prefer("get_datastory_theme", "snf.datastory")
+conflict_prefer("get_datastory_scheme", "snf.datastory")
+
+# Increase showtext package font resolution
+showtext_opts(dpi = 320)
+
+# Set the locale for date formatting (Windows)
+Sys.setlocale("LC_TIME", "German")
+
+# Create function to print number with local language-specific format 
+print_num <- function(x) snf.datastory::print_num(x, lang = "de")
+
+# Knitr hook for local formatting of printed numbers
+knitr::knit_hooks$set(
+  inline <- function(x) {
+    if (!is.numeric(x)) {
+      x
+    } else {
+      print_num(x)
+    }
+  }
+)
+```
+
+```{r print-header-infos, results='asis'}
+# Add publication date to header
+cat(format(as_datetime(params$publication_date), "%d.%m.%Y"))
+```
+
+```{r story-specific-setup, include=FALSE}
+# Set story-specific variables etc. here
+
+# E.g. loading data...
+
+```
+
+
+<!-- Short lead (2-3 sentences) in bold -->
+
+__Der SNF untersucht seine Fördertätigkeit akribisch. Ab sofort veröffentlicht er Erkenntnisse aus solchen Analysen auf dem Datenportal. Zum Start geht es um Open Access, ERC-Beiträge und Forscherinnen während der Pandemie.__
+
+Auf der Seite <a href="https://data.snf.ch/" target="_blank">data.snf.ch</a> zeigt der SNF, was trockene Zahlen nicht vermögen: Erkenntnisse zur Forschungsförderung in Form von datengetriebenen Artikeln. Mit dem Ziel, Ergebnisse von Untersuchungen transparent zu machen, mit denen der SNF sich selbst sowie die Forschungs- und Förderlandschaft durchleuchtet. Dadurch werden die Analysen für ein breites Publikum nachvollziehbar, auch visuell.
+
+Zum Start der Datengeschichten stehen folgende Themen im Fokus: 
+
+*	__<a href="https://data.snf.ch/stories/neue-zahlen-oa-monitoring-2018-19-de.html" target="_blank">Neue Daten zu Open Access</a>__: 55 Prozent der Publikationen von 2018 und 2019, die aus SNF-geförderter Forschung stammen, sind frei zugänglich. Tendenz steigend.
+*	__<a href="https://data.snf.ch/stories/weniger-foerdergesuche-frauen-de.html" target="_blank">Forscherinnen</a>__: Die Covid-19-Pandemie und ihr Einfluss auf das Geschlechterverhältnis bei Forschungsanträgen.
+*	__<a href="https://data.snf.ch/stories/erc-grantees-snf-grants-de.html" target="_blank">ERC-Beiträge</a>__: Die meisten Förderbeiträge des Europäischen Forschungsrats (ERC) in die Schweiz gehen an zuvor vom SNF unterstützte Forschende. 
+
+Zu den strategischen Prioritäten des SNF gehört es, den Forschungsplatz Schweiz mitzugestalten und dessen Bedürfnisse zu antizipieren. "Wissenschaftliche Analysen bilden die Grundlage, auf welcher wir unsere Forschungsförderung weiterentwickeln", sagt Pierre Willa, Mitglied der SNF-Geschäftsleitung. "So sorgt der SNF dafür, dass die öffentlichen Fördermittel von jährlich rund einer Milliarde Franken auch künftig sinnvoll eingesetzt werden."
+
+Lesen Sie unsere <a href="https://data.snf.ch/stories" target="_blank">Datengeschichten auf dem Datenportal des SNF</a>: Zahlen, Grafiken, Erläuterungen – für Sie aufbereitet.
+<br>
+<br>
