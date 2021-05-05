@@ -27,7 +27,7 @@ datastory_name_fr <- "recits-de-donnees"
 
 # English title and lead of the story (Mandatory, even if no EN version)
 title_en <- "Research funding in focus: even more transparent thanks to data stories" 
-lead_en <- "The SNSF meticulously examines its funding activities. From now own, we will publish these analyses on our data portal. To kick things off, we'll take a look at Open Access, ERC grants and women scientists during the pandemic." 
+lead_en <- "The SNSF meticulously examines its funding activities. From now on, we will publish these analyses on our data portal. To kick things off, we'll take a look at Open Access, ERC grants and women scientists during the pandemic." 
 # German title and lead of the story (Mandatory, even if no DE version)
 title_de <- "Forschungsförderung im Fokus: Dank Datengeschichten noch transparenter" 
 lead_de <- "Der SNF untersucht seine Fördertätigkeit akribisch. Ab sofort veröffentlicht er Erkenntnisse aus solchen Analysen auf dem Datenportal. Zum Start geht es um Open Access, ERC-Beiträge und Forscherinnen während der Pandemie." 

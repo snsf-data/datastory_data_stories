@@ -90,6 +90,8 @@ cat(paste0("<link href='https://fonts.googleapis.com/css?family=",
 
 <!-- Short lead (2-3 sentences) in bold -->
 
+__The SNSF meticulously examines its funding activities. From now on, we will publish these analyses on our data portal. To kick things off, we'll take a look at Open Access, ERC grants and women scientists during the pandemic.__
+
 On the <a href="https://data.snf.ch/" target="_blank">data.snf.ch</a> site, the SNSF shows what figures alone cannot: insights into research funding in the form of data-driven articles. The aim is to shine a light on the results of analyses with which the SNSF examines itself and the research and funding sector as a whole. These 'data stories' include visuals and illustrate for a wider audience what we can learn through data analyses.
 
 The data stories will start by focusing on:
